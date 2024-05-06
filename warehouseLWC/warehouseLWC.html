@@ -1,0 +1,220 @@
+<template>
+<lightning-card>
+
+    <template if:true={addProduct}>
+        
+        <span class="slds-text-align_center">
+            <h1 style="font-size: 2em;">Select Product</h1>
+            <lightning-layout multiple-rows>
+                <span class="slds-m-left_x-large">
+                    <lightning-combobox
+                        name="progress"
+                        
+                        value={productType}
+                        placeholder="Select Category"
+                        options={productOptions}
+                        style="width: 350px; text-align: left;"
+                        onchange={handleProduct}>
+                    </lightning-combobox>
+                </span>
+
+
+                <span class="slds-text-align_center  slds-m-around_x-smal">
+                    <lightning-layout multiple-rows>
+                        <span class="slds-m-left_x-large">
+                            <lightning-input type="search" onchange={handleSearch} placeholder="Search Product"
+                                style="width: 350px; height: 40px;"></lightning-input>
+                        </span>
+                    </lightning-layout>
+                </span>
+               <!-- <span class="slds-m-left_xx-large">
+                    <lightning-combobox
+                        name="progress"
+                        label="Warehouse Type"
+                        value={warehouse}
+                        placeholder="Select Warehouse"
+                        options={warehouseOptions}
+                        style="width: 250px; text-align: left;  "
+                        class="slds-m-right_x-large"
+                        onchange={handleWarehouse}>
+                    </lightning-combobox>  
+                </span> -->
+            </lightning-layout>
+        </span>
+
+        <!-- <span class="slds-text-align_center  slds-m-around_x-smal">
+            <lightning-layout multiple-rows>
+                <span class="slds-m-left_x-large">
+                    <lightning-input type="search" onchange={handleSearch} placeholder="Search Product"
+                        style="width: 450px; height: 40px;"></lightning-input>
+                </span>
+            </lightning-layout>
+        </span> -->
+
+        <div style="height: 300px;" class="slds-m-around_small">
+            <lightning-datatable show-row-number-column key-field="Id" data={data} columns={columns}
+                onrowselection={handleRowSelection} selected-rows={selectedProductsIds}>
+            </lightning-datatable>
+        </div>
+
+        <footer class="slds-modal__footer">
+            <template if:true={showNext}>
+                <lightning-button variant="Brand" onclick={handleNext} name="next" label="Next">
+                </lightning-button> &nbsp;
+            </template>&nbsp;
+            <lightning-button onclick={handleFirstCancel} name="firstcancel" label="Cancel">
+            </lightning-button>
+        </footer>
+    </template>
+
+    <template if:true={showTable}>
+        <div class="slds-scrollable">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                <thead>
+                    <tr style="position: sticky;top: 0;background-color: whitesmoke;z-index: 9;">
+                        <th scope="col" style="position: sticky; top: 0; z-index: 4;">
+                            <div class="slds-truncate " title="Action">Action</div>
+                        </th>
+                        <th scope="col" style=" top: 0; z-index: 4;">
+                            <div class="slds-truncate " title="S.No">S.No</div>
+                        </th>
+                        <th class="" scope="col"
+                            style="min-width: 70px;  top: 0;left:0; z-index: 8;">
+                            <div class="slds-truncate" title="Product">
+                                <span style="color:red">*</span>
+                                Product Name
+                            </div>
+                        </th>
+                        <th class="" scope="col" style=" top: 0; z-index: 4;">
+                            <div class="slds-truncate" title="Product Description">
+                                
+                                Description
+                            </div>
+                        </th>
+                        
+                        <th class="" scope="col" style=" top: 0; z-index: 4;">
+                            <div class="slds-truncate" type="Number" title="List Price">
+                                <span style="color:red">*</span>
+                                List Price
+                            </div>
+                        </th>
+                        <th class="" scope="col" style=" top: 0; z-index: 4;">
+                            <div class="slds-truncate" type="Number" title="SalesPrice">
+                                <span style="color:red">*</span>
+                                Sales Price
+                            </div>
+                        </th>
+                        <th class="" scope="col" style=" top: 0; z-index: 4;">
+                            <div class="slds-truncate" title="Quantity">
+                                <span style="color:red">*</span>
+                                Quantity
+                            </div>
+                        </th>
+                        
+                        <th class="" scope="col" style="top: 0; z-index: 4;">
+                            <div class="slds-truncate" type="percent" title="Discount">Discount(%)</div>
+                        </th>
+                        <th class="" scope="col" style="position: sticky; top: 0; z-index: 4;">
+                            <div class="slds-truncate" title="Net Amount">Net Amount</div>
+                        </th>
+                        
+                        <th class="" scope="col" style=" top: 0; z-index: 4;">
+                            <div class="slds-truncate" title="Total Amount">Total Amount</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={selectedRecords} for:item="item" for:index="index">
+                        <tr class="slds-hint-parent" key={item.id}>
+                            <td data-label="Action">
+                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"
+                                    title="Delete" onclick={genericChange} data-index={index} name="deleteRow"
+                                    variant="destructive" class="delete-icon-button">
+                                </lightning-button-icon>
+                            </td>
+                            <td class="slds-text-align_center">
+                                <lightning-formatted-number value={item.rowNumber}></lightning-formatted-number>
+                            </td>
+                            <td class="slds-text-align_center"
+                                style="min-width: 170px;left:0;background-color: whitesmoke;z-index: 8;left:0; text-align: left;">
+                                <a href={item.recordUrl} data-index={index} target="_blank">{item.Description__c}</a>
+                            </td>
+                                                            
+                            <th>
+                                <div style="min-width: 250px;">
+                                    <lightning-input name="Description" label="Description"
+                                        variant="label-hidden" class="" data-index={index} type="Text"
+                                        step="any" value={item.Description} onchange={genericChange}>
+                                    </lightning-input>
+                                    <!-- <span>{item.Description__c}</span> -->
+                                </div>
+                            </th>
+                            
+                            
+
+                            <th>
+                                <div style="min-width: 70px;">
+                                    <div style="min-width: 70px;">
+                                        <span>{item.List_Price__c}</span>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div style="min-width: 70px;">
+                                    <lightning-input name="SalesPrice" required=true variant="label-hidden"
+                                        data-index={index} type="number" class="" value={item.ListPrice}
+                                        onchange={genericChange}></lightning-input>
+                                </div>
+                            </th>
+                            <th>
+                                <div style="min-width: 70px;">
+                                    <lightning-input name="quantity" required=true label="Quantity(MT)"
+                                        variant="label-hidden" class="" data-index={index} type="number"
+                                        step="any" value={item.Quantity} onchange={genericChange}>
+                                    </lightning-input>
+                                </div>
+                            </th>
+                            
+                            <th>
+                                <div style="min-width: 70px;">
+                                    <lightning-input name="Discount" variant="label-hidden"
+                                        data-index={index} type="percent" step=".01"
+                                        class="" value={item.discount} onchange={genericChange}>
+                                    </lightning-input>
+                                </div>
+                            </th>
+                            <th>
+                                <div style="min-width: 70px;">
+                                    <lightning-input name="netAmount" variant="label-hidden" data-index={index}
+                                        type="number" step=".01" class="" value={item.NetAmount}
+                                        onchange={genericChange}></lightning-input>
+                                </div>
+                            </th>
+                            
+                            <th>
+                                <div style="min-width: 70px;">
+                                    <lightning-input name="TotalAmount" variant="label-hidden"
+                                        data-index={index} type="text" class="" value={item.TotalAmount}
+                                        onchange={genericChange}></lightning-input>
+                                </div>
+                            </th>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            
+        </div>
+        <footer class="slds-modal__footer" >
+            <lightning-button variant="Brand" class="slds-float_left" onclick={handlePreviousFirstPage}
+                name="previous" label="Back"></lightning-button> &nbsp;
+            <template if:false={saveButtonDisabled}>
+                <lightning-button variant="Brand" onclick={handleSave} name="save" label="Save">
+                </lightning-button> &nbsp;
+            </template>
+            <lightning-button onclick={handleFirstCancel} name="firstcancel" label="Cancel">
+            </lightning-button>
+        </footer>
+    </template>
+</lightning-card>
+</template>

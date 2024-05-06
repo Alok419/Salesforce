@@ -1,0 +1,28 @@
+.custom-card .slds-card__header {
+    text-align: center;
+}
+
+.large-input input {
+    width: 300px; 
+    height: 40px; 
+}
+
+/* For mobile devices */
+@media only screen and (max-width: 600px) {
+    .slds-size_small {
+        width: 100% !important;
+    }
+    .slds-medium-size_3-of-12, .slds-medium-size_9-of-12, .slds-large-size_3-of-12, .slds-large-size_9-of-12 {
+        width: 100% !important;
+    }
+}
+
+/* For laptops and larger screens */
+@media only screen and (min-width: 601px) {
+    .slds-size_small {
+        width: auto !important;
+    }
+    .slds-medium-size_3-of-12, .slds-medium-size_9-of-12, .slds-large-size_3-of-12, .slds-large-size_9-of-12 {
+        width: initial !important;
+    }
+}
