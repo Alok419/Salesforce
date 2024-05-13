@@ -1,0 +1,164 @@
+<template>
+
+<lightning-card if:true={page1}>
+
+    <div style={backgroundStyle}>
+    
+<!-- <lightning-card>
+    <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+        <h1 style="font-size: 2em;">Feedback</h1>
+    </div>
+    <hr>
+    <div style="margin:auto; padding:20px;">
+        <div class="options-container">
+            <h2 class="option" style="margin-bottom: 20px;" data-value="question">Which of the following business objectives would our product help to solve?</h2>
+            <h2 class="option" style="cursor: pointer;" onclick={handleOptionClick} data-value="Within a week">Within a week</h2>
+            <h2 class="option" style="cursor: pointer;" onclick={handleOptionClick} data-value="Drive More Sales">Drive More Sales</h2>
+            <h2 class="option" style="cursor: pointer;" onclick={handleOptionClick} data-value="Help retain more Customers">Help retain more Customers</h2>
+            <lightning-input class="option1" type="text" label="" placeholder="Others" onchange={handleInputChange}></lightning-input>
+        </div>
+        <lightning-button class="slds-float_right" variant="brand" label="NEXT" onclick={handleSubmit}></lightning-button>
+
+    </div>
+    
+</lightning-card> -->
+<div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+    <h1 style="font-size: 2em;">Feedback</h1>
+</div>
+<hr>
+<div style="margin:auto; padding:20px;">
+    <div class="options-container">
+        <h2 class="option" style="margin-bottom: 20px;background : white" data-value="question">Which of the following business objectives would our product help to solve?</h2>
+        
+        <template if:true={highlight2}>
+            <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick} data-value="Increase Operational Efficiency">Increase Operational Efficiency</h2>
+        </template>
+        <template if:false={highlight2}>
+            <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick} data-value="Increase Operational Efficiency">Increase Operational Efficiency</h2>
+        </template>
+
+        <!-------------------------------dfdgd-->
+        <template if:true={highlight1}>
+            <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick} data-value="Drive More Sales">Drive More Sales</h2>
+        </template>
+        <template if:false={highlight1}>
+            <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick} data-value="Drive More Sales">Drive More Sales</h2>
+        </template>
+
+        <!-------------------------------dfdgd-->
+        <template if:true={highlight}>
+            <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick} data-value="Help retain more Customers">Help retain more Customers</h2>
+        </template>
+        <template if:false={highlight}>
+            <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick} data-value="Help retain more Customers">Help retain more Customers</h2>
+        </template>
+        <!-------------------------------dfdgd-->
+        
+        <lightning-input class="option1" type="text" label="" placeholder="Others" onchange={handleInputChange}></lightning-input>
+    </div>
+    <lightning-button class="slds-float_right" variant="brand" label="NEXT" onclick={handleNext}></lightning-button>
+
+</div>
+</div>
+</lightning-card>
+ 
+
+
+<lightning-card if:true={Page2}>
+    <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+        <h1 style="font-size: 2em;">Feedback</h1>
+    </div>
+    <div style={backgroundStyle2}>
+        <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+            <h2 style="margin: 20px;" >Has a budget been allocated for this type of solution?</h2>
+
+            <lightning-icon
+            icon-name="utility:check" onclick={handleCheck}
+            size="large"
+            alternative-text="Indicates approval" style="margin: 30px;" class="--slds-c-icon-color-foreground-default: orange">
+        </lightning-icon>
+        <lightning-icon
+            icon-name="utility:close"  onclick={handleCross}
+            size="large"
+            alternative-text="Indicates approval" style="margin: 30px;"
+        >
+        </lightning-icon>
+        </div>
+        <lightning-button class="slds-float_left" variant="brand" label="Back" onclick={handleBack1}></lightning-button>
+        <lightning-button class="slds-float_right" variant="brand" label="NEXT" onclick={handleNext2}></lightning-button>
+
+    </div>
+</lightning-card>
+
+<lightning-card if:true={Page3}>
+    <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+        <h1 style="font-size: 2em;">Feedback</h1>
+    </div>
+    <div style={backgroundStyle2}>
+        <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+            <h2 style="margin: 20px;" >Do you have authority to make the final purchase decision?</h2>
+            <template if:true={highlight3}>
+                <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick2} data-value="Yes">Yes</h2>
+            </template>
+            <template if:false={highlight3}>
+                <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick2} data-value="Yes">Yes</h2>
+            </template>
+    
+            <!-------------------------------dfdgd-->
+            <template if:true={highlight4}>
+                <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick2} data-value="No">No</h2>
+            </template>
+            <template if:false={highlight4}>
+                <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick2} data-value="No">NO</h2>
+            </template>
+           
+            <lightning-input if:true={highlight4} class="option1" type="text" label="" placeholder="Others" onchange={handleInputChange1}></lightning-input>
+        </div>
+        <lightning-button class="slds-float_left" variant="brand" label="Back" onclick={handleBack2}></lightning-button>
+        <lightning-button class="slds-float_right" variant="brand" label="NEXT" onclick={handleNext3}></lightning-button>
+
+    </div>
+</lightning-card>
+
+<lightning-card if:true={page4}>
+    <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+        <h1 style="font-size: 2em;">Feedback</h1>
+    </div>
+    <div style={backgroundStyle2}>
+        <div class="slds-text-align_center" style="margin: 2px; padding:2px;">
+            <h2 style="margin: 20px;" >What is your decision timeline?</h2>
+
+            <template if:true={h1}>
+                <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick3} data-value="Within a week">Within a week</h2>
+            </template>
+            <template if:false={h1}>
+                <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick3} data-value="Within a week">Within a week</h2>
+            </template>
+
+            <template if:true={h2}>
+                <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick3} data-value="Within a month">Within a month</h2>
+            </template>
+            <template if:false={h2}>
+                <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick3} data-value="Within a month">Within a month</h2>
+            </template>
+
+            <template if:true={h3}>
+                <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick3} data-value="Within a quarter">Within a quarter</h2>
+            </template>
+            <template if:false={h3}>
+                <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick3} data-value="Within a quarter">Within a quarter</h2>
+            </template>
+
+            <template if:true={h4}>
+                <h2 class="option" style="cursor: pointer;background : yellow;color:white;" onclick={handleOptionClick3} data-value="Within a year">Within a year</h2>
+            </template>
+            <template if:false={h4}>
+                <h2 class="option" style="cursor: pointer;background : white;color:black;" onclick={handleOptionClick3} data-value="Within a year">Within a year</h2>
+            </template>
+        </div>
+        <lightning-button class="slds-float_left" variant="brand" label="Back" onclick={handleBack3}></lightning-button>
+        <lightning-button class="slds-float_right" variant="brand" label="Submit" onclick={handleSubmit}></lightning-button>
+
+    </div>
+</lightning-card>
+</template>

@@ -1,0 +1,21 @@
+/* YourComponent.css */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.option {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.option1{
+    margin-bottom: 10px;
+}
+
