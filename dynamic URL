@@ -1,0 +1,131 @@
+<template>
+<div class="slds-text-heading_large">Trending articles</div>
+<hr>
+<!--div class="slds-grid">
+    <div class="slds-col slds-p-horizontal_medium slds-text-align_left slds-text-heading_large">
+        <img src={Icon1} width="50" height="50"/>
+        <span>On road safety</span>
+    </div>
+    <div class="slds-col slds-p-horizontal_medium slds-text-align_left slds-text-heading_large">
+        <img src={Icon5} width="50" height="50"/>
+        <span>Cruise in the community</span>
+    </div>
+    
+</div-->
+<table class="slds-table slds-table_cell-buffer slds-table_fixed-layout" >
+
+    <tbody class="slds-grid slds-wrap slds-gutters">
+    <template for:each={trendingTopicName} for:item="topic">
+        <tr class=" slds-large-size_1-of-2" key={topic.objId}>
+            <td>
+                <a href={topic.objUrlName} target="_blank" style="color: black;">{topic.objTitle}</a>
+            </td>
+        </tr>
+    </template>
+</tbody>
+
+</table>
+<!--
+<div class="slds-grid">
+    <div class="slds-col slds-p-horizontal_medium">
+        <span>Report someone tampering</span>
+    </div>
+    <div class="slds-col slds-p-horizontal_medium">
+        <span>The car was too far away from</span>
+    </div>
+</div>
+
+<div class="slds-grid slds-text-align_left">
+    <div class="slds-col slds-p-horizontal_medium">
+        <span>First time rider story.</span>
+    </div>
+    <div class="slds-col slds-p-horizontal_medium">
+        <span>I'm experincaing longer than expected wait times.</span>
+    </div>
+</div>
+
+<div class="slds-grid">
+    <div class="slds-col slds-p-horizontal_medium">
+        <span>An object is obstructig the cruse cars intended path.</span>
+    </div>
+    <div class="slds-col slds-p-horizontal_medium slds-text-align_left">
+        <span>There are no cars available when I request a ride.</span>
+    </div>
+</div>
+-->
+</template>
+
+
+
+  ------------------------------------
+  import { LightningElement,track } from 'lwc';
+import staticLogo1 from '@salesforce/resourceUrl/Icon1';
+import staticLogo2 from '@salesforce/resourceUrl/Icon5';
+import trendingTopics from '@salesforce/apex/trendingTopicsController.trendingTopics';
+
+export default class TrendindTopicsCMP extends LightningElement {
+    Icon1 = staticLogo1;
+    Icon5 = staticLogo2;
+    @track trendingTopicName = [];
+   @track  urlOftopic; 
+    size;
+    
+connectedCallback() {
+   
+    trendingTopics()
+    .then(data =>{
+        console.log('data-------'+JSON.stringify(data));
+        if(data != null){
+            this.trendingTopicName = JSON.parse(data);
+            console.log('this.trendingTopicName.....'+ JSON.stringify(this.trendingTopicName));
+        }
+        
+        
+        // this.size = data.length;
+        //  for(let i = 0; i < this.size; i++) {
+        //             this.urlOftopic = 'https://cruise--xprnccloud.sandbox.my.site.com/support/s/article/' + data[i].title;
+        //         }
+        
+    
+    })
+    .catch(error =>{
+        console.log('error----'+JSON.stringify(error));
+    })
+    
+}
+}
+
+
+
+------------------------
+
+
+  public class trendingTopicsController {
+  @AuraEnabled
+    public static String trendingTopics(){
+       List<KnowledgeArticleVersion>listKnowledgeArticleVersion = [SELECT Id, Title, UrlName, KnowledgeArticleId, PublishStatus, Language, ArticleTotalViewCount FROM KnowledgeArticleVersion WHERE PublishStatus = 'Online' AND Language = 'en_US' AND KnowledgeArticleId IN (SELECT ParentId FROM KnowledgeArticleViewStat) ORDER BY ArticleTotalViewCount DESC LIMIT 6];
+     List<wrapper> wrapperList = new List<wrapper>();
+      for (KnowledgeArticleVersion variable : listKnowledgeArticleVersion) {
+          if(variable.Title != null && variable.Title != ''){
+                wrapper obj = new wrapper();
+                obj.objId = variable.Id;
+                obj.objTitle = variable.Title;
+                string tempURL = 'https://cruise--xprnccloud.sandbox.my.site.com/support/s/article/'+variable.UrlName;
+                obj.objUrlName = tempURL;
+                
+                wrapperList.add(obj);
+          }
+         
+      }
+      if(wrapperList.size()>0){
+          return JSON.serialize(wrapperList);
+      }
+      return null;
+      
+    }
+    public class wrapper{
+        public String objId;
+        public string objTitle;
+        Public String objUrlName;
+    }
+}
