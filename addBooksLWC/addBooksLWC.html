@@ -1,0 +1,214 @@
+<template>
+
+<div style="border: 1px black solid;">
+<lightning-card>
+
+<span class="slds-text-align_center" >
+<h1 style="font-size: 2em;">Select Books</h1>
+<hr>
+<div class="slds-text-align_left" style=" font-size: 1.5em;margin-left: 20px; " >
+    Account Name :{acountName}  
+</div>
+</span>
+<div>
+<span class="slds-m-left_x-large">
+<lightning-combobox
+    name="Select Books"
+    value={value}
+    placeholder="Select Category"
+    options={options}
+    style=" text-align: left; margin-left: 20px;margin-right: 20px; margin-top: 10px;"
+    onchange={handleChange} ></lightning-combobox>
+</span>
+
+
+<div  if:true={v1} class="slds-m-around_small">
+<div class="slds-section slds-is-open " data-id={id}>
+<h3 class="slds-section__title main ">
+    <span aria-label={category}></span>
+    <button type="button" aria-controls={id}  class="slds-button slds-section__title-action " data-buttonid={id}
+        onclick={toggleChoiceA}>
+        <span style="width:100%" class="slds-truncate slds-text-heading_small " title={label}>{label}</span>
+        <lightning-icon icon-name="utility:switch" alternative-text="button icon" size="x-small"
+        class="slds-section__title-action-icon " value={category} >
+    </lightning-icon>
+
+    </button>
+    
+</h3>
+<div class="slds-section__content">
+    <slot>
+        <lightning-datatable  show-row-number-column key-field="Id" data={data} columns={columns} onrowselection={handleRowSelection}
+    selected-rows={selectedProductsIds}> 
+</lightning-datatable>
+    </slot>
+</div>
+</div>
+
+</div> 
+</div>
+<div>
+<span class="slds-m-left_x-large">
+<lightning-combobox
+name="Select Books"
+value={value}
+placeholder="Select Category"
+options={options1}
+style=" text-align: left; margin-left: 20px;margin-right: 20px;"
+onchange={handleChange1} ></lightning-combobox>
+</span>
+
+<div if:true={v2} class="slds-m-around_small">
+<div class="slds-section slds-is-open " data-id1={id}>
+<h3 class="slds-section__title main ">
+    
+    <button type="button" aria-controls={id}  class="slds-button slds-section__title-action " data-buttonid1={id}
+        onclick={toggleChoiceB}>
+        <span style="width:100%" class="slds-truncate slds-text-heading_small " title={label}>{label}</span>
+        <lightning-icon icon-name="utility:switch" alternative-text="button icon" size="x-small"
+        class="slds-section__title-action-icon ">
+    </lightning-icon>
+
+    </button>
+    
+</h3>
+<div class="slds-section__content">
+    <slot>
+        <lightning-datatable  show-row-number-column key-field="Id" data={data1} columns={columns1} onrowselection={handleRowSelection}
+    selected-rows={selectedProductsIds}>
+</lightning-datatable>
+    </slot>
+</div>
+</div>
+
+</div>
+</div>
+
+<div>
+<span class="slds-m-left_x-large">
+<lightning-combobox
+name="Select Books"
+value={value}
+placeholder="Select Category"
+options={options2}
+style=" text-align: left; margin-left: 20px;margin-right: 20px;"
+onchange={handleChange2} ></lightning-combobox>
+</span>
+
+<div  if:true={v3} class="slds-m-around_small">
+<div class="slds-section slds-is-open " data-id2={id}>
+<h3 class="slds-section__title main ">
+    
+    <button type="button" aria-controls={id}  class="slds-button slds-section__title-action " data-buttonid2={id}
+        onclick={toggleChoiceC} > Category:{category2}
+        <span style="width:100%" class="slds-truncate slds-text-heading_small " title={label}>{label}</span>
+        <lightning-icon icon-name="utility:switch" alternative-text="button icon" size="x-small"
+        class="slds-section__title-action-icon "> 
+    </lightning-icon>
+
+    </button>
+    
+</h3>
+<div class="slds-section__content">
+    <slot>
+        <lightning-datatable  show-row-number-column key-field="Id" data={data2} columns={columns2} onrowselection={handleRowSelection}
+    selected-rows={selectedProductsIds}>
+</lightning-datatable>
+    </slot>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+</lightning-card>
+
+
+<hr>
+
+<lightning-layout multiple-rows>
+<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4" padding="around-small" flexibility="auto">
+            <span  >
+                <b>#Total Books :</b> {noOftotalBook}                     </span>
+</lightning-layout-item>
+<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4" padding="around-small" flexibility="auto">
+        <span  >
+            <b>#Selected Books :</b> {noOfselectedBook}                    </span>
+</lightning-layout-item>
+<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4" padding="around-small" flexibility="auto">
+<span  >
+    <b>#Remaining Books :</b>{noOfRemainingBook}            </span>
+</lightning-layout-item>
+</lightning-layout>
+
+
+<hr>
+
+<div >
+<lightning-layout multiple-rows>
+<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                <span  >
+                <lightning-input type="text" placeholder="पुस्तक कहा से लेते है" style="width: 250px;" onchange={handle1}></lightning-input>
+            </span>
+</lightning-layout-item>
+<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+            <span  >
+                <lightning-input type="text" placeholder="वर्तमान में किस प्रकाशन की पुस्तक चलते है" style="width: 250px;"  onchange={handle2}></lightning-input>
+            </span>
+</lightning-layout-item>
+    </lightning-layout>
+
+<lightning-layout multiple-rows>
+    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                    <span  >
+                        <lightning-input type="text" placeholder="वापसी योग्य/अयोग्य" style="width: 250px;"   onchange={handle3}></lightning-input>
+                    </span>
+    </lightning-layout-item>
+    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                <span  >
+                    <lightning-input type="text" placeholder="मोबाइल नंबर" style="width: 250px;"  onchange={handle4}></lightning-input>
+                </span>
+    </lightning-layout-item>
+    
+    </lightning-layout>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                        <span  >
+                            <lightning-input type="text" placeholder="प्रचार्य का नाम" style="width: 250px;"  onchange={handle5}></lightning-input>
+                        </span>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                    <span  >
+                        <lightning-input type="text" placeholder="कमीशन" style="width: 250px;"  onchange={handle6}></lightning-input>
+                    </span>
+        </lightning-layout-item>
+        
+        </lightning-layout>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                            <span  >
+                                <lightning-input type="text" placeholder="ऑर्डर हेतु कब आना है" style="width: 250px;"   onchange={handle7}></lightning-input>
+                            </span>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small" flexibility="auto">
+                        <span  >
+                            <lightning-input type="text" placeholder="किताबे कब निर्दरित की जाती है" style="width: 250px;"  onchange={handle8}></lightning-input>
+                        </span>
+            </lightning-layout-item>
+            
+            </lightning-layout>
+
+
+</div>
+<footer class="slds-modal__footer">
+
+<lightning-button variant="Brand" onclick={handleSave} name="next" label="Save">
+</lightning-button> &nbsp;
+&nbsp;
+<lightning-button onclick={handleFirstCancel} name="firstcancel" label="Cancel">
+</lightning-button>
+</footer>
+</div>
+</template>
